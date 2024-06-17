@@ -1,0 +1,1 @@
+Pasta dedicada ao Trabalho Final de React Native
