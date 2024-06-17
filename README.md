@@ -1,6 +1,5 @@
-# ReactNative
-
 <h1>Grupo1:</h1>
+
 <p>Juan</p>
 <p>Marcela</p>
 <p>Bruna</p>
