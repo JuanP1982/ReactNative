@@ -1,18 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import styles from './styles'
 import React from 'react'
 
 export default function Botao({onPress, value}) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}><Text style={{color:'white'}}>{value}</Text></TouchableOpacity>
+    <TouchableOpacity onPress={onPress} style={styles.button}><Text style={{color:'white', fontSize:20}}>{value}</Text></TouchableOpacity>
   )
 }
 
-const styles = StyleSheet.create({
-    button:{
-        backgroundColor:"#7f2a82",
-        color:"#fff",
-        borderRadius:10,
-        marginTop:10,
-        padding:13
-    }
-})

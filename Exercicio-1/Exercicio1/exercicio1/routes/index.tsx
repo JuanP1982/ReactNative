@@ -3,9 +3,10 @@ import React from 'react'
 import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Feather from 'react-native-vector-icons/Feather'
 import Home from '../screens/Home'
-import Ajuda from '../screens/Ajuda'
+import Ajuda from '../screens/Apoie'
 import Contato from '../screens/Contato'
 import Sobre from '../screens/Sobre'
+import Apoie from '../screens/Apoie'
 
 export default function Routes() {
   const Tab = createBottomTabNavigator()
@@ -20,11 +21,11 @@ export default function Routes() {
             })
             }
                 }/>
-            <Tab.Screen name='Ajuda' component={Ajuda} options={
+            <Tab.Screen name='Apoie-nos' component={Apoie} options={
             {
             tabBarActiveTintColor:'green',
             tabBarIcon:(({size,color}) => {
-                return <Feather name="help-circle" color={color} size={size}/>
+                return <Feather name="dollar-sign" color={color} size={size}/>
             })
             }
                 } />
