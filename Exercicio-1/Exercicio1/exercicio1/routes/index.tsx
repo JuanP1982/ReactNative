@@ -15,6 +15,7 @@ export default function Routes() {
         <Tab.Navigator >
             <Tab.Screen name='Home' component={Home} options={
             {
+            headerShown:false,
             tabBarActiveTintColor:'green',
             tabBarIcon:(({size,color}) => {
                 return <Feather name="home" color={color} size={size}/>
@@ -23,6 +24,7 @@ export default function Routes() {
                 }/>
             <Tab.Screen name='Apoie-nos' component={Apoie} options={
             {
+            headerShown:false,
             tabBarActiveTintColor:'green',
             tabBarIcon:(({size,color}) => {
                 return <Feather name="dollar-sign" color={color} size={size}/>
@@ -31,6 +33,7 @@ export default function Routes() {
                 } />
             <Tab.Screen name='Contato' component={Contato} options={
             {
+            headerShown:false,
             tabBarActiveTintColor:'green',
             tabBarIcon:(({size,color}) => {
                 return <Feather name="phone" color={color} size={size}/>
@@ -39,6 +42,7 @@ export default function Routes() {
         }   />
             <Tab.Screen name='Sobre' component={Sobre} options={
             {
+            headerShown:false,    
             tabBarActiveTintColor:'green',
             tabBarIcon:(({size,color})=>{
                 return <Feather name="file-text" color={color} size={size} />
