@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getProdutos } from "../../service/filmes";
 import {
   View,
   Text,
@@ -8,46 +9,68 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 
 // import Card from "../Card";
 
-const generateFilmesData = () => {
-  return [
+const renderListaLateralItem = ({ item }) => (
+  <TouchableOpacity style={styles.listaLateralItem}>
+    <Image style={styles.listaLateralPoster} source={{uri:item.Poster}} />
+    <Text style={styles.listaLateralTitle}>{item.Title}</Text>
+  </TouchableOpacity>
+);
+
+export default function Home() {
+  const [filmes, setFilmes] = useState([
     {
       imdbID: "tt0120737",
       Title: "Cruella",
-      Poster: require("../../assets/cruella.jpeg"),
+      Poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr2Fo9Nb7bLdyILFYbMZKtEnu-659zCT9DYw&usqp=CAU",
     },
     {
       imdbID: "tt0167261",
       Title: "Raya",
-      Poster: require("../../assets/raya.jpeg"),
+      Poster: "https://lumiere-a.akamaihd.net/v1/images/1920x1080_logo_355fcbfc.png",
     },
     {
       imdbID: "tt0167262",
       Title: "Luca",
-      Poster: require("../../assets/luca.jpeg"),
+      Poster: "https://img.odcdn.com.br/wp-content/uploads/2021/06/original_1622571176_Luca_Poster.jpg",
     },
-  ];
-};
-
-const renderListaLateralItem = ({ item }) => (
-  <View style={styles.listaLateralItem}>
-    <Image style={styles.listaLateralPoster} source={item.Poster} />
-    <Text style={styles.listaLateralTitle}>{item.Title}</Text>
-  </View>
-);
-
-export default function Home() {
-  const [filmes, setFilmes] = useState(generateFilmesData());
+  ]);
   const [busca, setBusca] = useState("");
-
-  const obterFilmes = () => {
-    const filmesFiltrados = generateFilmesData().filter((filme) =>
+  const [filmesInicio, setFilmesInicio] = useState(filmes)
+  const [filmesPesquisados, setFilmesPesquisados] = useState([])
+  const obterFilmes = async () => {
+    
+    const filmesFiltrados = filmes.filter((filme) =>
       filme.Title.toLowerCase().includes(busca.toLowerCase())
     );
-    setFilmes(filmesFiltrados);
+
+    if (filmesFiltrados.length > 0) {
+      setFilmes(filmesFiltrados);
+      return;
+    }
+
+    try {
+      const res = await getProdutos(busca);
+      const filmeEncontrado = {
+        imdbID: res.data.imdbID,
+        Title: res.data.Title,
+        Poster: res.data.Poster,
+      };
+
+      setFilmes([filmeEncontrado])
+      setFilmesPesquisados([...filmesPesquisados, filmeEncontrado])
+    } catch (error) {
+      console.error("Erro ao buscar filmes:", error);
+    }
+  };
+
+  const catalogo = () => {
+    setFilmes([...filmesInicio, ...filmesPesquisados]);
+    setBusca("");
   };
 
   return (
@@ -66,6 +89,7 @@ export default function Home() {
           onChangeText={(text) => setBusca(text)}
         />
         <Button title="Buscar" onPress={obterFilmes} />
+        <Button title="Inicio" onPress={catalogo} />
       </View>
       <ScrollView>
         <View style={styles.encarte}>
@@ -81,7 +105,7 @@ export default function Home() {
             data={filmes}
             renderItem={renderListaLateralItem}
             keyExtractor={(item) => item.imdbID}
-            showsVerticalScrollIndicator={false}
+            
           />
         </View>
       </ScrollView>
@@ -137,6 +161,7 @@ const styles = StyleSheet.create({
   },
   listaLateral: {
     marginBottom: 20,
+    height:"90%",
     width: "90%",
   },
   listaLateralItem: {
@@ -146,7 +171,7 @@ const styles = StyleSheet.create({
   },
   listaLateralPoster: {
     width: "100%",
-    height: 120,
+    height: 200,
     borderRadius: 5,
   },
 });
