@@ -26,9 +26,11 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
     let usuario={}
         querySnapshot.forEach((doc) => {
           usuario={
+          id: doc.id,
           nome: doc.data().nome,
           email: doc.data().email,
-          };
+          favoritos:doc.data().favoritos,
+          }
         });
     await AsyncStorage.setItem('Usuario', JSON.stringify(usuario));
     await AsyncStorage.setItem('token', 'logado');
@@ -49,9 +51,9 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
 
   if (error) {
     return (
-      <div>
-        <p>Error: {error.message}</p>
-      </div>
+      <View>
+        <Text>Error: {error.message}</Text>
+      </View>
     );
   }
 

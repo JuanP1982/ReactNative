@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../firebaseConnection';
 
 const Profile = () => {
   const navigation = useNavigation();
-  const [userName, setUserName] = React.useState('');
-  const [UserEmail, setUserEmail] = useState("")
+  const isFocused = useIsFocused();
+  const [user, setUser] = useState({})
+  const [favoritos, setFavoritos] = useState([]);
 
-  React.useEffect(() => {
-    loadUserName();
-  }, []);
+  useEffect(() => {
+    if (isFocused) {
+      loadUserName();
+    }
+  }, [isFocused]);
 
   const loadUserName = async () => {
     try {
       const userData = await AsyncStorage.getItem('Usuario');
       if (userData) {
-        const { nome,email } = JSON.parse(userData);
-        setUserName(nome);
-        setUserEmail(email)
+        const processado = JSON.parse(userData);
+        setUser(processado);
+        setFavoritos(processado.favoritos || []);
+        console.log(processado);
       }
     } catch (error) {
       console.error('Error loading user data:', error);
@@ -33,15 +39,24 @@ const Profile = () => {
       console.error('Error logging out:', error);
     }
   };
+
+  const favoritoBox = ({ item }) => (
+    <View >
+      <Text style={{color:"white"}}>{item.Title}</Text>
+    </View>
+  );
   
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
-      <Text style={styles.userName}>{userName}</Text>
-      <Text style={styles.userName}>{UserEmail}</Text>
+      <Text style={styles.userName}>{user.nome}</Text>
+      <Text style={styles.userName}>{user.email}</Text>
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Logout</Text>
       </TouchableOpacity>
+      <View >
+        <FlatList data={favoritos} renderItem={favoritoBox} ></FlatList>
+        </View>
     </View>
   );
 };

@@ -18,16 +18,15 @@ const Register = ({ navigation, onRegister }) => {
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  function handleSignIn(){
-    
-  }
+
 
   const handleRegisterPress = async () => {
     await createUserWithEmailAndPassword(email,password)
     await addDoc(collection(db,"Clientes",),{
       nome:name,
       email:email,
-      senha:password,  
+      senha:password,
+      favoritos:[]
     })
     
   };
