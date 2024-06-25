@@ -6,7 +6,7 @@ import Feather from "react-native-vector-icons/Feather";
 import Home from "../screens/Home";
 import About from "../screens/About";
 import Profile from "../screens/Profile";
-
+import Cart from "../screens/Card";
 
 export default function Routes() {
   const Tabs = createBottomTabNavigator();
