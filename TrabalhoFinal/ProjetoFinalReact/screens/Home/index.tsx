@@ -30,16 +30,16 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#ffffff',
+      backgroundColor: '##21212',
       alignItems: 'center',
       justifyContent: 'center',
     },
     title:{
         fontSize:24,
-        color:"#000000"
+        color:"#fffff"
     },
     input:{
-      borderColor:"#000000",
+      borderColor:"#ffff",
       borderWidth:2,
       width:"90%"
     }
