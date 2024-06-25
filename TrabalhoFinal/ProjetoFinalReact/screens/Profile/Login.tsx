@@ -19,7 +19,7 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
     error,
   ] = useSignInWithEmailAndPassword(auth);
 
-  async function teste(){
+  async function ArmazenarUser(){
     const usersRef = collection(db, 'Clientes');
     const q = query(usersRef, where('email', '==', email));
     const querySnapshot = await getDocs(q);
@@ -40,7 +40,7 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
     try {
       await signInWithEmailAndPassword(email, password);
       if (user) {
-        await storeUserData();
+        await ArmazenarUser();
         navigation.navigate('Routes');
       } else {
         Alert.alert('Erro', 'Credenciais inválidas. Por favor, tente novamente.');
