@@ -1,17 +1,48 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import CustomButton from '../../components/CustomButton';
+import { addDoc, collection } from 'firebase/firestore';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth, db } from '../../firebaseConnection';
 
 
 const Register = ({ navigation, onRegister }) => {
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const handleRegisterPress = () => {
-    onRegister(name, email, password);
+  function handleSignIn(){
+    
+  }
+
+  const handleRegisterPress = async () => {
+    await createUserWithEmailAndPassword(email,password)
+    await addDoc(collection(db,"Clientes",),{
+      nome:name,
+      email:email,
+      senha:password,  
+    })
+    
   };
+
+  if (error) {
+    return (
+      <View>
+        <Text>Error: {error.message}</Text>
+      </View>
+    );
+  }
+
+  if (loading) {
+    return <Text>Carregando...</Text>
+  }
 
   return (
     <View style={styles.container}>

@@ -1,19 +1,59 @@
 import React, { useState } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import CustomButton from '../../components/CustomButton';
+import { auth, db } from '../../firebaseConnection';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Firestore, collection, getDocs, query, where } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 
-const Login = ({ navigation, onLogin, onNavigateToRegister }) => {
+const Login = ({  onLogin, onNavigateToRegister }) => {
+  const navigation = useNavigation()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
 
-  const handleLoginPress = () => {
-    onLogin(email, password);
+  async function teste(){
+    const usersRef = collection(db, 'Clientes');
+    const q = query(usersRef, where('email', '==', email));
+    const querySnapshot = await getDocs(q);
+    let usuario={}
+        querySnapshot.forEach((doc) => {
+          usuario={
+          nome: doc.data().nome,
+          email: doc.data().email,
+          };
+        });
+    await AsyncStorage.setItem('Usuario', JSON.stringify(usuario));
+    await AsyncStorage.setItem('token', 'logado');
+  }
+
+  const handleLoginPress = async () => {
+    await signInWithEmailAndPassword(email,password)
+    if (signInWithEmailAndPassword){
+    teste()
+      navigation.navigate("Routes")
+    }
+    
   };
 
   const handleRegisterPress = () => {
     onNavigateToRegister();
   };
+
+  if (error) {
+    return (
+      <div>
+        <p>Error: {error.message}</p>
+      </div>
+    );
+  }
 
   return (
     <View style={styles.container}>

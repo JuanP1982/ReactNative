@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 const Profile = () => {
   const navigation = useNavigation();
   const [userName, setUserName] = React.useState('');
+  const [UserEmail, setUserEmail] = useState("")
 
   React.useEffect(() => {
     loadUserName();
@@ -13,10 +14,11 @@ const Profile = () => {
 
   const loadUserName = async () => {
     try {
-      const userData = await AsyncStorage.getItem('userData');
+      const userData = await AsyncStorage.getItem('Usuario');
       if (userData) {
-        const { name } = JSON.parse(userData);
-        setUserName(name);
+        const { nome,email } = JSON.parse(userData);
+        setUserName(nome);
+        setUserEmail(email)
       }
     } catch (error) {
       console.error('Error loading user data:', error);
@@ -25,7 +27,8 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      navigation.navigate('Login');
+      await AsyncStorage.removeItem('Usuario');
+      navigation.navigate('Home');
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -35,6 +38,7 @@ const Profile = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <Text style={styles.userName}>{userName}</Text>
+      <Text style={styles.userName}>{UserEmail}</Text>
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Logout</Text>
       </TouchableOpacity>

@@ -4,6 +4,7 @@ import { StyleSheet, View, StatusBar } from 'react-native';
 import AuthNavigator from './auth/AuthNavigator';
 import Routes from './routes';
 import Logo from './components/logo';
+import StackRoutes from './routes/StackRoutes';
 
 const App = () => {
   const [userAuthenticated, setUserAuthenticated] = React.useState(false);
@@ -21,7 +22,7 @@ const App = () => {
           <AuthNavigator onAuthentication={handleAuthentication} />
         ) : (
           <View style={styles.routesContainer}>
-            <Routes />
+            <StackRoutes />
           </View>
         )}
       </View>

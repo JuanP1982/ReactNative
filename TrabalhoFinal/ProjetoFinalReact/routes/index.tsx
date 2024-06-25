@@ -12,7 +12,7 @@ export default function Routes() {
   const Tabs = createBottomTabNavigator();
 
   return (
-    <NavigationContainer>
+    
       <Tabs.Navigator>
         <Tabs.Screen
           name="Home"
@@ -45,6 +45,6 @@ export default function Routes() {
           }}
         />
       </Tabs.Navigator>
-    </NavigationContainer>
+    
   );
 }

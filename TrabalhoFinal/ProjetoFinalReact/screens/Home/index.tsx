@@ -13,47 +13,53 @@ import {
 } from "react-native";
 
 import styles from "./styles";
+import { useNavigation } from "@react-navigation/native";
+import MoviePage from "../MoviePage";
 
 // import Card from "../Card";
 
-const renderListaLateralItem = ({ item }) => (
-  <TouchableOpacity
-    onPress={() => alert(item.Title)}
-    style={styles.listaLateralItem}
-  >
-    <Image
-      resizeMode="stretch"
-      style={styles.listaLateralPoster}
-      source={{ uri: item.Poster }}
-    />
-    <Text style={styles.listaLateralTitle}>{item.Title}</Text>
-  </TouchableOpacity>
-);
 
 export default function Home() {
+  const navigation = useNavigation();
   const [filmes, setFilmes] = useState([
     {
       imdbID: "tt0120737",
       Title: "Cruella",
       Poster:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr2Fo9Nb7bLdyILFYbMZKtEnu-659zCT9DYw&usqp=CAU",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr2Fo9Nb7bLdyILFYbMZKtEnu-659zCT9DYw&usqp=CAU",
     },
     {
       imdbID: "tt0167261",
       Title: "Raya and the Last Dragon",
       Poster:
-        "https://lumiere-a.akamaihd.net/v1/images/1920x1080_logo_355fcbfc.png",
+      "https://lumiere-a.akamaihd.net/v1/images/1920x1080_logo_355fcbfc.png",
     },
     {
       imdbID: "tt0167262",
       Title: "Luca",
       Poster:
-        "https://img.odcdn.com.br/wp-content/uploads/2021/06/original_1622571176_Luca_Poster.jpg",
+      "https://img.odcdn.com.br/wp-content/uploads/2021/06/original_1622571176_Luca_Poster.jpg",
     },
   ]);
   const [busca, setBusca] = useState("");
   const [filmesInicio, setFilmesInicio] = useState(filmes);
   const [filmesPesquisados, setFilmesPesquisados] = useState([]);
+  
+  const renderListaLateralItem = ({ item }) => (
+    <TouchableOpacity
+    onPress={() => navigation.navigate('MoviePage', { Title: item.Title })}
+    style={styles.listaLateralItem}
+    >
+      <Image
+        resizeMode="stretch"
+        style={styles.listaLateralPoster}
+        source={{ uri: item.Poster }}
+        />
+      <Text style={styles.listaLateralTitle}>{item.Title}</Text>
+    </TouchableOpacity>
+  );
+  
+  
   const obterFilmes = async () => {
     const filmesFiltrados = filmes.filter((filme) =>
       filme.Title.toLowerCase().includes(busca.toLowerCase())
@@ -114,7 +120,8 @@ export default function Home() {
               { key: "4",Title:"Raya and the Last Dragon", image: require("../../assets/raya.jpeg") },
             ]}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={()=>alert(item.Title)}>
+              <TouchableOpacity onPress={() => navigation.navigate('MoviePage', { Title: item.Title })
+            }>
               <Image style={styles.banner} source={item.image} />
               </TouchableOpacity>
             )}

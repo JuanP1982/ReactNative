@@ -5,6 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from '../screens/Profile/Login';
 import Register from '../screens/Profile/Register';
 import Profile from '../screens/Profile/index';
+import Home from '../screens/Home';
+import Routes from '../routes';
+import StackRoutes from '../routes/StackRoutes';
 
 const Stack = createStackNavigator();
 
@@ -74,6 +77,7 @@ const AuthNavigator = ({ onAuthentication }) => {
           {(props) => <Register {...props} onRegister={handleRegister} />}
         </Stack.Screen>
         <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+        <Stack.Screen name="Routes" component={StackRoutes} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
