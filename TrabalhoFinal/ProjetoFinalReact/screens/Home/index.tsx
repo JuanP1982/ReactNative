@@ -18,7 +18,7 @@ import styles from "./styles";
 
 const renderListaLateralItem = ({ item }) => (
   <TouchableOpacity
-    onPress={() => alert(`testando ${item.Title}`)}
+    onPress={() => alert(item.Title)}
     style={styles.listaLateralItem}
   >
     <Image
@@ -40,7 +40,7 @@ export default function Home() {
     },
     {
       imdbID: "tt0167261",
-      Title: "Raya",
+      Title: "Raya and the Last Dragon",
       Poster:
         "https://lumiere-a.akamaihd.net/v1/images/1920x1080_logo_355fcbfc.png",
     },
@@ -89,7 +89,7 @@ export default function Home() {
       <View style={styles.header}>
         <Image
           style={styles.logo}
-          source={require("../../assets/disney-logo.png")}
+          source={require("../../assets/favicon.png")}
         />
       </View>
       <View style={styles.searchContainer}>
@@ -108,13 +108,15 @@ export default function Home() {
           <FlatList
             horizontal
             data={[
-              { key: "1", image: require("../../assets/dug.jpeg") },
-              { key: "2", image: require("../../assets/ron.jpeg") },
-              { key: "3", image: require("../../assets/red.jpeg") },
-              { key: "4", image: require("../../assets/raya.jpeg") },
+              { key: "1",Title:"Dug Days", image: require("../../assets/dug.jpeg") },
+              { key: "2",Title:"Ron's Gone Wrong", image: require("../../assets/ron.jpeg") },
+              { key: "3",Title:"Turning Red", image: require("../../assets/red.jpeg") },
+              { key: "4",Title:"Raya and the Last Dragon", image: require("../../assets/raya.jpeg") },
             ]}
             renderItem={({ item }) => (
+              <TouchableOpacity onPress={()=>alert(item.Title)}>
               <Image style={styles.banner} source={item.image} />
+              </TouchableOpacity>
             )}
             keyExtractor={(item) => item.key}
           />

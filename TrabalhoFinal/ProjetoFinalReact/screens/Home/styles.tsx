@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: 150,
-    height: 50,
+    width: 200,
+    height: 100,
     resizeMode: "contain",
   },
   searchContainer: {
