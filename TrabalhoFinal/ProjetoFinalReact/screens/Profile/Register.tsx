@@ -28,7 +28,7 @@ const Register = ({ navigation, onRegister }) => {
       senha:password,
       favoritos:[]
     })
-    
+    navigation.navigate('Routes');
   };
 
   if (error) {

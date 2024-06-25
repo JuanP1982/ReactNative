@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import { auth, db } from '../../firebaseConnection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -37,25 +37,23 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
   }
 
   const handleLoginPress = async () => {
-    await signInWithEmailAndPassword(email,password)
-    if (signInWithEmailAndPassword){
-    teste()
-      navigation.navigate("Routes")
+    try {
+      await signInWithEmailAndPassword(email, password);
+      if (user) {
+        await storeUserData();
+        navigation.navigate('Routes');
+      } else {
+        Alert.alert('Erro', 'Credenciais inválidas. Por favor, tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro ao efetuar login:', error.message);
+      Alert.alert('Erro', 'Houve um problema ao tentar fazer login. Por favor, tente novamente mais tarde.');
     }
-    
   };
 
   const handleRegisterPress = () => {
     onNavigateToRegister();
   };
-
-  if (error) {
-    return (
-      <View>
-        <Text>Error: {error.message}</Text>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
