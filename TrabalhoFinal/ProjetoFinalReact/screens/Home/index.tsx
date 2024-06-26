@@ -83,6 +83,7 @@ export default function Home() {
     }
   };
 
+
   const catalogo = () => {
     setFilmes([...filmesInicio, ...filmesPesquisados]);
     setBusca("");
