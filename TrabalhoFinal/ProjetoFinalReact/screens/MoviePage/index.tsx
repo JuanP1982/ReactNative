@@ -1,5 +1,5 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, Image, TouchableOpacity, Animated } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
 import { getProdutos } from "../../service/filmes";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -13,6 +13,8 @@ export default function MoviePage({ route }) {
   const { Title } = route.params;
   const [user, setUser] = useState({});
   const [favoritos, setFavoritos] = useState([]);
+  const [showImage, setShowImage] = useState(false);
+  const opacity = useRef(new Animated.Value(0)).current; // Inicializa com 0 (invisível)
 
   useEffect(() => {
     getProdutos(Title)
@@ -56,10 +58,30 @@ export default function MoviePage({ route }) {
       setUser(AtualizadoUser);
       setFavoritos(FavoritosAtualizado);
       console.log("Favorito adicionado");
+      
+      // Mostrar a imagem e iniciar a animação
+      setShowImage(true);
+      startAnimation();
     } catch (error) {
       console.error("Erro ao atualizar os favoritos:", error);
     }
   }
+
+  const startAnimation = () => {
+    opacity.setValue(0);
+    Animated.sequence([
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 2500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 2500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setShowImage(false)); // Ocultar a imagem após a animação
+  };
 
   return (
     <View style={styles.container}>
@@ -76,6 +98,14 @@ export default function MoviePage({ route }) {
       <TouchableOpacity style={styles.button} onPress={handleEditUser}>
         <Text style={styles.buttonText}>Favoritar</Text>
       </TouchableOpacity>
+      {showImage && (
+        <Animated.Image
+          style={[styles.blinkingImage, { opacity }]}
+          source={require('../../assets/star-removebg-preview.png')}
+        />
+      )}
     </View>
   );
 }
+
+

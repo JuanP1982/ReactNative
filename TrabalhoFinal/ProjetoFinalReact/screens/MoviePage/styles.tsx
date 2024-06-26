@@ -44,6 +44,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  blinkingImage: {
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+    marginTop: 20,
+  },
 });
 
 export default styles;
+
+
