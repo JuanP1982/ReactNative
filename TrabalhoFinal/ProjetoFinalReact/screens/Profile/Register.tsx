@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import { addDoc, collection } from 'firebase/firestore';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConnection';
 import Input from '../../components/Input';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Register = ({ navigation, onRegister }) => {
@@ -19,30 +20,40 @@ const Register = ({ navigation, onRegister }) => {
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-
+  
+  useEffect(()=>{
+    const registroSucesso = async ()=>{
+      if (user) {
+        let usuario = {
+          nome: name,
+          email: email,
+          senha: password,
+          favoritos: []
+        }
+        await addDoc(collection(db, "Clientes"), {
+          nome: name,
+          email: email,
+          senha: password,
+          favoritos: []
+        });
+        await AsyncStorage.setItem('Usuario', JSON.stringify(usuario));
+        await AsyncStorage.setItem('token', 'logado');
+        navigation.navigate('Routes');
+    }
+  }
+  registroSucesso()
+  },[user])
+   
 
   const handleRegisterPress = async () => {
-    await createUserWithEmailAndPassword(email,password)
-    await addDoc(collection(db,"Clientes",),{
-      nome:name,
-      email:email,
-      senha:password,
-      favoritos:[]
-    })
-    navigation.navigate('Routes');
+    try {
+      await createUserWithEmailAndPassword(email, password);
+      } 
+     catch (erro) {
+      console.error('Erro ao registrar:', erro.message);
+      Alert.alert('Erro', 'Houve um problema ao tentar registrar.');
+    }
   };
-
-  if (error) {
-    return (
-      <View>
-        <Text>Error: {error.message}</Text>
-      </View>
-    );
-  }
-
-  if (loading) {
-    return <Text>Carregando...</Text>
-  }
 
   return (
     <View style={styles.container}>

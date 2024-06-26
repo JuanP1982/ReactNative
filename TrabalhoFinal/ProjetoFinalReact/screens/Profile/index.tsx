@@ -28,7 +28,7 @@ const Profile = () => {
         const processado = JSON.parse(userData);
         setUser(processado);
         setFavoritos(processado.favoritos || []);
-        console.log(processado);
+        
       }
     } catch (error) {
       console.error('Error loading user data:', error);
@@ -38,7 +38,9 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('Usuario');
-      navigation.navigate('Home');
+      
+      
+      navigation.navigate('Login');
     } catch (error) {
       console.error('Error logging out:', error);
     }

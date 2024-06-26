@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import CustomButton from '../../components/CustomButton';
@@ -19,42 +19,61 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
+  
+  useEffect(() => {
+    const LoginSucesso = async () => {
+      
+      
+      if (user) {
+        
+        
+        await ArmazenarUser();
+        navigation.navigate('Routes');
+      }
+    };
+
+    LoginSucesso();
+  }, [user]);
 
   async function ArmazenarUser(){
-    const usersRef = collection(db, 'Clientes');
-    const q = query(usersRef, where('email', '==', email));
-    const querySnapshot = await getDocs(q);
-    let usuario={}
-        querySnapshot.forEach((doc) => {
-          usuario={
+    try {
+      
+      const usersRef = collection(db, 'Clientes');
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+
+      let usuario = {};
+      querySnapshot.forEach((doc) => {
+        usuario = {
           id: doc.id,
           nome: doc.data().nome,
           email: doc.data().email,
-          favoritos:doc.data().favoritos,
-          }
-        });
-    await AsyncStorage.setItem('Usuario', JSON.stringify(usuario));
-    await AsyncStorage.setItem('token', 'logado');
+          favoritos: doc.data().favoritos,
+        };
+      });
+      
+      
+      await AsyncStorage.setItem('Usuario', JSON.stringify(usuario));
+      await AsyncStorage.setItem('token', 'logado');
+    } catch (e) {
+      console.error('Erro ao armazenar usuário no AsyncStorage:', e);
+      Alert.alert('Erro', 'Não foi possível armazenar os dados do usuário.');
+    }
   }
 
   const handleLoginPress = async () => {
     try {
       await signInWithEmailAndPassword(email, password);
-      if (user) {
-        await ArmazenarUser();
-        navigation.navigate('Routes');
-      } else {
-        Alert.alert('Erro', 'Credenciais inválidas. Por favor, tente novamente.');
-      }
-    } catch (error) {
-      console.error('Erro ao efetuar login:', error.message);
-      Alert.alert('Erro', 'Houve um problema ao tentar fazer login. Por favor, tente novamente mais tarde.');
+      } catch (erro) {
+      console.error('Erro ao efetuar login:', erro.message);
+      Alert.alert('Erro', 'Houve um problema ao tentar fazer login.');
     }
   };
 
   const handleRegisterPress = () => {
     onNavigateToRegister();
   };
+
 
   return (
     <View style={styles.container}>
