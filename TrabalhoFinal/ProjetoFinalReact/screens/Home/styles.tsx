@@ -33,6 +33,22 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginRight: 10,
   },
+  button: {
+    backgroundColor: "#424242",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 5,
+    shadowColor: "#00ff00",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   encarte: {
     marginBottom: 20,
   },
