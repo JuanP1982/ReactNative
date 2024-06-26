@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getProdutos } from "../../service/filmes";
 import {
   View,
@@ -43,6 +43,12 @@ export default function Home() {
   const [busca, setBusca] = useState("");
   const [filmesInicio, setFilmesInicio] = useState(filmes);
   const [filmesPesquisados, setFilmesPesquisados] = useState([]);
+
+  useEffect(()=>{
+    if(busca.length === 0){
+      catalogo()
+    }
+  },[busca])
 
   const renderListaLateralItem = ({ item }) => (
     <TouchableOpacity

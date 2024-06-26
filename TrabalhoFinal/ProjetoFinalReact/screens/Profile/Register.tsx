@@ -24,21 +24,13 @@ const Register = ({ navigation, onRegister }) => {
   useEffect(()=>{
     const registroSucesso = async ()=>{
       if (user) {
-        let usuario = {
-          nome: name,
-          email: email,
-          senha: password,
-          favoritos: []
-        }
         await addDoc(collection(db, "Clientes"), {
           nome: name,
           email: email,
           senha: password,
           favoritos: []
         });
-        await AsyncStorage.setItem('Usuario', JSON.stringify(usuario));
-        await AsyncStorage.setItem('token', 'logado');
-        navigation.navigate('Routes');
+        navigation.navigate('Login');
     }
   }
   registroSucesso()
