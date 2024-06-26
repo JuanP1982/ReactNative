@@ -1,10 +1,11 @@
 // src/App.tsx
-import React from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
-import AuthNavigator from './auth/AuthNavigator';
-import Routes from './routes';
-import Logo from './components/logo';
-import StackRoutes from './routes/StackRoutes';
+import React from "react";
+import { StyleSheet, View, StatusBar } from "react-native";
+import AuthNavigator from "./auth/AuthNavigator";
+import Routes from "./routes";
+import Logo from "./components/logo";
+import StackRoutes from "./routes/StackRoutes";
+import ConnectionStatus from "./components/ConnectionStatus";
 
 const App = () => {
   const [userAuthenticated, setUserAuthenticated] = React.useState(false);
@@ -16,7 +17,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      {/* <Logo /> */}
+      {/* <ConnectionStatus /> */}
       <View style={styles.authContainer}>
         {!userAuthenticated ? (
           <AuthNavigator onAuthentication={handleAuthentication} />
@@ -33,26 +34,16 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: "#121212",
   },
   authContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   routesContainer: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
 });
 
-export default App;  
-
-
-
-
-
-
-
-
-
-
+export default App;
