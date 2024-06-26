@@ -4,6 +4,7 @@ import CustomButton from '../../components/CustomButton';
 import { addDoc, collection } from 'firebase/firestore';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConnection';
+import Input from '../../components/Input';
 
 
 const Register = ({ navigation, onRegister }) => {
@@ -46,17 +47,13 @@ const Register = ({ navigation, onRegister }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Name"
-        placeholderTextColor="#ccc"
         value={name}
         onChangeText={setName}
       />
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Email"
-        placeholderTextColor="#ccc"
         value={email}
         onChangeText={setEmail}
       />

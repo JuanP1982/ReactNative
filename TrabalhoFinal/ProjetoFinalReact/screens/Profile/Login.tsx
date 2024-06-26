@@ -6,6 +6,7 @@ import { auth, db } from '../../firebaseConnection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Firestore, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import Input from '../../components/Input';
 
 const Login = ({  onLogin, onNavigateToRegister }) => {
   const navigation = useNavigation()
@@ -57,10 +58,8 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Email"
-        placeholderTextColor="#ccc"
         value={email}
         onChangeText={setEmail}
       />
@@ -96,15 +95,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#121212',
   },
-  input: {
-    width: '100%',
-    padding: 10,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    color: '#fff',
-  },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -117,6 +107,15 @@ const styles = StyleSheet.create({
   eyeText: {
     color: '#fff',
     fontSize: 18,
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    color: '#fff',
   },
   registerButton: {
     backgroundColor: '#000',
