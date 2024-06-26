@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     icones:{
       flexDirection:"row",
-      marginTop:30,  
+      marginTop:10,  
     },
     film:{
       width:140,
