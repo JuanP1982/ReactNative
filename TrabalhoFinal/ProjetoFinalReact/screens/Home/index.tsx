@@ -15,6 +15,8 @@ import {
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import MoviePage from "../MoviePage";
+import Banner from "../../components/Banner";
+import MovieCard from "../../components/MovieCard";
 
 // import Card from "../Card";
 
@@ -50,19 +52,7 @@ export default function Home() {
     }
   },[busca])
 
-  const renderListaLateralItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("MoviePage", { Title: item.Title })}
-      style={styles.listaLateralItem}
-    >
-      <Image
-        resizeMode="stretch"
-        style={styles.listaLateralPoster}
-        source={{ uri: item.Poster }}
-      />
-      <Text style={styles.listaLateralTitle}>{item.Title}</Text>
-    </TouchableOpacity>
-  );
+  
 
   const obterFilmes = async () => {
     const filmesFiltrados = filmes.filter((filme) =>
@@ -115,53 +105,9 @@ export default function Home() {
         </TouchableOpacity>
       </View>
       <ScrollView>
-        <View style={styles.encarte}>
-          <Text style={styles.sectionTitle}>Filme em Destaque</Text>
-          <FlatList
-            horizontal
-            data={[
-              {
-                key: "1",
-                Title: "Dug Days",
-                image: require("../../assets/dug.jpeg"),
-              },
-              {
-                key: "2",
-                Title: "Ron's Gone Wrong",
-                image: require("../../assets/ron.jpeg"),
-              },
-              {
-                key: "3",
-                Title: "Turning Red",
-                image: require("../../assets/red.jpeg"),
-              },
-              {
-                key: "4",
-                Title: "Raya and the Last Dragon",
-                image: require("../../assets/raya.jpeg"),
-              },
-            ]}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("MoviePage", { Title: item.Title })
-                }
-              >
-                <Image style={styles.banner} source={item.image} />
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.key}
-          />
-        </View>
-
-        <View style={styles.listaLateral}>
-          <Text style={styles.sectionTitle}>Outros Filmes</Text>
-          <FlatList
-            data={filmes}
-            renderItem={renderListaLateralItem}
-            keyExtractor={(item) => item.imdbID}
-          />
-        </View>
+        <Banner></Banner>
+        <MovieCard filmes={filmes}></MovieCard>
+        
       </ScrollView>
     </View>
   );

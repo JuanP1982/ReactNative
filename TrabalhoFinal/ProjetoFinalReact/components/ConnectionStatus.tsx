@@ -7,7 +7,12 @@ const ConnectionStatus = () => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      console.log("Connection status:", state.isConnected);
+      if (state.isConnected === false) {
+        alert("Sem conexão com a internet!")
+      }else{
+        console.log("Status da conexão: Conectado");
+        
+      }
       setIsConnected(state.isConnected);
     });
 

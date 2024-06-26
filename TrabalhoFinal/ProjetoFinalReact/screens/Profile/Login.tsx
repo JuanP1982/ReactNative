@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/CustomButton/CustomButton';
 import { auth, db } from '../../firebaseConnection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Firestore, collection, getDocs, query, where } from 'firebase/firestore';
@@ -25,8 +25,6 @@ const Login = ({  onLogin, onNavigateToRegister }) => {
       
       
       if (user) {
-        
-        
         await ArmazenarUser();
         navigation.navigate('Routes');
       }

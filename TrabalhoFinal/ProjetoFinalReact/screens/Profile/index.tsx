@@ -28,7 +28,6 @@ const Profile = () => {
         const processado = JSON.parse(userData);
         setUser(processado);
         setFavoritos(processado.favoritos || []);
-        console.log(user);
         
       }
     } catch (error) {

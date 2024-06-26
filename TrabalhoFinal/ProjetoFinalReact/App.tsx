@@ -17,7 +17,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      {/* <ConnectionStatus /> */}
+      <ConnectionStatus />
       <View style={styles.authContainer}>
         {!userAuthenticated ? (
           <AuthNavigator onAuthentication={handleAuthentication} />

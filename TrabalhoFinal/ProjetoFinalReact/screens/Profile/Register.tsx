@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '../../components/CustomButton/CustomButton';
 import { addDoc, collection } from 'firebase/firestore';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth, db } from '../../firebaseConnection';

@@ -88,7 +88,8 @@ export default function MoviePage({ route }) {
       <Text style={styles.title}>{filme.Title}</Text>
       <Image style={styles.poster} source={{ uri: filme.Poster }} />
       <Text style={styles.plot}>{filme.Plot}</Text>
-      <Text style={styles.title}>{user.nome}</Text>
+      <Text style={styles.title}>Nota Imdb: {filme.imdbRating}</Text>
+      <Text style={styles.title}>Duração: {filme.Runtime}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Home")}

@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   poster: {
-    width: 250,
-    height: 400,
+    width: "60%",
+    height: "50%",
     resizeMode: "cover",
     marginBottom: 20,
   },
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     marginBottom: 20,
     color: "#FFFFFF",
+    fontSize:20
   },
   button: {
     backgroundColor: "#3d3d3d",
